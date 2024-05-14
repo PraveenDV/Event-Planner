@@ -7,6 +7,8 @@ import subprocess
 from PIL import ImageTk, Image
 import ast
 import customtkinter as ctk
+import threading
+#from home import display_home
 
 ctk.set_appearance_mode('System')
 
@@ -32,12 +34,16 @@ def login():
     password=entry2.get()
 
     if username in r1.keys() and password==r1[username]:
-        subprocess.run(['python', r'home.py'], check=True)
+        subprocess.run(['python', r'home.py'], check=True) 
+        
     elif not username and not password:
         messagebox.showerror(message='Please provide the required credentials')
     else:
         messagebox.showerror(message='Invalid credentials')
 
+    login_window.destroy()
+
+    
 # create custom tkinter window
 login_window = ctk.CTk()  
 login_window.geometry("600x440")
@@ -61,7 +67,7 @@ entry2 = ctk.CTkEntry(master=frame, width=220, placeholder_text='Password', show
 entry2.place(x=50, y=165)
 
 # Create custom button
-button1 = ctk.CTkButton(master=frame, width=220, text="Login", command=login, corner_radius=6)
+button1 = ctk.CTkButton(master=frame, width=220, text="Login", command=threading.Thread(target=login).start, corner_radius=6)
 button1.place(x=50, y=240)
 
 
@@ -77,3 +83,5 @@ button1.place(x=50, y=240)
 
 if __name__=="__main__":
     login_window.mainloop()
+else:
+    login_window.destroy()

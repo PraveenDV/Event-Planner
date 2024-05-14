@@ -14,7 +14,7 @@ ctk.CTkLabel(window, width=25, text="Welcome", font=('Century Gothic', 25, 'bold
 # Function to display sign up page
 def display_sign_up():
     subprocess.run(['python', 'sign_up_page.py'])
-
+    
 #Signup button
 button_signup = ctk.CTkButton(window, text="Sign Up", command= display_sign_up,
                            font=("Arial", 24))

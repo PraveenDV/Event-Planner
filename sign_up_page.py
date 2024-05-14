@@ -6,6 +6,8 @@ from PIL import ImageTk, Image
 import ast
 import customtkinter as ctk
 
+import threading
+
 sign_up_window = ctk.CTk()
 sign_up_window.title("Sign Up")
 sign_up_window.geometry("800x800")
@@ -14,6 +16,7 @@ sign_up_window.configure(bg="light blue")
 
 def open_login_page():
     subprocess.run(['python', 'login_page.py'],check=True)
+    
 
 #roles=['Admin', 'Teacher', 'Student']
 
@@ -40,14 +43,15 @@ def sign_up():
 
             messagebox.showinfo('Signup', "Succesfully signed up!")
             subprocess.run(['python', 'home.py'],check=True)
-            
+            sign_up_window.destroy()
+
          except:
             file=open(r'data_files\users.txt', 'w')
             data=str({'Username':'password'})
             file.write(data)
             file.close()
 
-         sign_up_window.destroy()
+         
          
     else: 
             messagebox.showerror(message='Please enter username and password')
@@ -77,14 +81,12 @@ role_var.set(roles[0])
 dropdown=ctk.CTkOptionMenu(sign_up_window, variable=role_var, values=roles, hover=True)
 dropdown.place(x=500, y=420)'''
 
-sign_up_button=ctk.CTkButton(frame, text="Sign Up", font=("Arial", 11, "bold"), width=20, command=sign_up)
+sign_up_button=ctk.CTkButton(frame, text="Sign Up", font=("Arial", 11, "bold"), width=20, command=threading.Thread(target=sign_up).start)
 sign_up_button.place(x=500, y=480)
 
 ctk.CTkLabel(frame, text="Already have an account?",  font=("Arial", 11)).place(x=500, y=580)
-signin=ctk.CTkButton(frame, width=6, text='Sign in', fg_color='#57a1f8', command=open_login_page)
+signin=ctk.CTkButton(frame, width=6, text='Sign in', fg_color='#57a1f8', command=threading.Thread(target=open_login_page).start)
 signin.place(x=670, y=580)
 
 if __name__=='__main__':
     sign_up_window.mainloop()
-else:
-    sign_up_window.destroy()
