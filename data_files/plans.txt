@@ -1,0 +1,3 @@
+{"Date": "2024-05-18", "Event": "get together", "Location of Event": "jayanagar"}
+{"Date": "2024-05-20", "Event": "school reopenig", "Location of Event": "jp nagar"}
+{"Date": "2024-05-26", "Event": "my birthday", "Location of Event": "jp nagar"}

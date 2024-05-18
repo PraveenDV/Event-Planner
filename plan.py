@@ -3,21 +3,25 @@ import tkinter as tk
 from tkcalendar import Calendar, DateEntry
 import csv
 from tkinter import messagebox
-
+import json
 
 def addEntry():
     date=calendar.selection_get()
     event=event_entry.get()
     location=location_entry.get()
     if event and date and location:
-        with open('data_files\plans.csv', 'a', newline='') as write_file:
-            writer=csv.writer(write_file)
-            writer.writerow([f'Date:{date}, Event:{event}, Location of Event:{location}'])
-            
-        messagebox.showinfo("Successfully added event!")
+        data_rec = {
+            "Date": str(date),
+            "Event": event,
+            "Location of Event": location
+        }
+        with open('data_files\plans.txt', 'a', newline='') as write_file:        
+            json.dump(data_rec, write_file)
+            write_file.write('\n')
+        messagebox.showinfo('',"Successfully added event!")
 
     else:
-        messagebox.showwarning('Please input the required details')
+        messagebox.showwarning('Warning', 'Please input required details')
 
 def clear_event():
     event_entry.delete(0, ctk.END)
@@ -43,7 +47,7 @@ location_entry.place(x=400, y=200)
 addEvent_btn=ctk.CTkButton(planner_window, width=20, height=20, corner_radius=5, text='Add Event', command=addEntry)
 addEvent_btn.place(x=350, y=300)
 
-cancel_btn=ctk.CTkButton(planner_window, width=20, height=20, corner_radius=5, text='Cancel Selection', command=clear_event)
+cancel_btn=ctk.CTkButton(planner_window, width=20, height=20, corner_radius=5, text='Clear Selection', command=clear_event)
 cancel_btn.place(x=450, y=300)
 
 planner_window.mainloop()
